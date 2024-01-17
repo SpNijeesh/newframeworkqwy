@@ -1,6 +1,7 @@
 package nijeeshqwy.pageobjects;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.StaleElementReferenceException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -22,7 +23,7 @@ public class ShopMerchantInventoryPage {
     @FindBy(xpath = "//input[@placeholder='Search']")
     WebElement Inventorysearch;
 
-    @FindBy(xpath = "//button[@class='button']")
+    @FindBy(xpath = "//button[@class='button'][1]")
     private WebElement inventoryedit;
 
     @FindBy(xpath = "//div[@class='select-shop-wrap']//input[@formcontrolname='price']")
@@ -30,19 +31,15 @@ public class ShopMerchantInventoryPage {
 
     @FindBy(xpath = "//button[normalize-space()='Update']")
     private WebElement inventorudatebutton;
-
-    @FindBy(xpath = "//div[@id='toast-container']")
-    private WebElement successtoster;
+   @FindBy(xpath = "//div[@id='toast-container']")
+   	private WebElement successtoster;
 
     @FindBy(xpath = "//td[@class='price-block']")
     private WebElement updatedprice;
     
+    @FindBy(css = "td:nth-child(4)")
+    private WebElement shopsku;
     
-
- 
-
-    @FindBy(xpath = "//div[@id='toast-container']")
-    private WebElement submissionMessage;
 
     // Constructor
     public ShopMerchantInventoryPage(WebDriver driver) {
@@ -58,14 +55,17 @@ public class ShopMerchantInventoryPage {
     }
 
     // Method to perform Inventory Search
-    public void performInventorySearch(String searchTerm) {
+    public void performInventorySearch(String searchTerm) throws InterruptedException {
         WebElement searchField = wait.until(ExpectedConditions.elementToBeClickable(this.Inventorysearch));
         searchField.click();
         searchField.sendKeys(searchTerm);
+        Thread.sleep(4000);
+
     }
 
-    // Method to perform InventoryEdit
-    public void performInventoryEdit(String pricetoupdate) throws InterruptedException {
+     //Method to perform InventoryEdit
+     
+    public void  performInventoryEdit(String pricetoupdate) throws InterruptedException {
         wait.until(ExpectedConditions.elementToBeClickable(inventoryedit)).click();
         wait.until(ExpectedConditions.elementToBeClickable(inventoryprice)).click();
         inventoryprice.clear();
@@ -73,8 +73,9 @@ public class ShopMerchantInventoryPage {
         inventorudatebutton.click();
         wait.until(ExpectedConditions.elementToBeClickable(successtoster));
         wait.until(ExpectedConditions.elementToBeClickable(updatedprice));
-        String newprice=updatedprice.getText();
+      
     	}
+
 
     // Method to perform InventoryCSV download
     public void performInventoryCSV()
