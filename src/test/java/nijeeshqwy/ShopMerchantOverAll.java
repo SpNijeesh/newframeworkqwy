@@ -89,20 +89,22 @@ public class ShopMerchantOverAll{
        
     }
     @Test(priority = 6)
-    public void shopInventorySearch()
+    public void shopInventorySearch() throws InterruptedException
     {
-  
-    	inventorypage.performInventorySearch("Cadbury Chocobakes ChocFilled Cookies Cream Filled");
-
+    	inventorypage.performInventorySearch("New Del Jan");
+ 
     }
     @Test(priority = 7)
     public void shopInventoryEdit() throws InterruptedException
     {
-    	inventorypage.performInventoryEdit("30");
-    	Thread.sleep(6000);
-    
-
+    	loginTest();
+    	shopInventory();
+    	shopInventorySearch();
+    	inventorypage.performInventoryEdit("50");
+    	Thread.sleep(3000);
+    	
     }
+
     public String getScreenshot(String testCaseName,WebDriver driver) throws IOException
     {
     	TakesScreenshot ts=(TakesScreenshot)driver;
