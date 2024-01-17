@@ -17,31 +17,33 @@ import nijeeshqwy.resources.ExtentReporterNG;
 public class Listerners extends ShopMerchantOverAll implements ITestListener{
 	ExtentTest test;
 	ExtentReports extent= ExtentReporterNG.getReportObject();
+	ThreadLocal <ExtentTest>extentTest= new ThreadLocal<ExtentTest>(); //to avoid concurency 
+	
 	
 	@Override
 	public void onTestStart(ITestResult result) {
 	    // Code to be executed when a test method starts
 		test= extent.createTest(result.getMethod().getMethodName());
+		extentTest.set(test);// creat unique id for each test
 	}
 	@Override
 	public void onTestSuccess(ITestResult result) {
 	    // Code to be executed on test method success
-		test.log(Status.PASS, "Test Passed");
+		extentTest.get().log(Status.PASS, "Test Passed");
 	}
 	@Override
 	public void onTestFailure(ITestResult result) {
 	    // Code to be executed on test method failure
-		test.fail(result.getThrowable());
+		extentTest.get().fail(result.getThrowable());
 		String filepath = null;
 		try {
 			driver=(WebDriver)result.getTestClass().getRealClass().getField("driver").get(result.getInstance());
 			
 			filepath = getScreenshot(result.getMethod().getMethodName(),driver);
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		test.addScreenCaptureFromPath(filepath, result.getMethod().getMethodName());
+		extentTest.get().addScreenCaptureFromPath(filepath, result.getMethod().getMethodName());
 		
 	}
 	@Override
