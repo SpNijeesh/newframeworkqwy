@@ -5,9 +5,11 @@
     <classes>
       <class name="nijeeshqwy.ShopMerchantOverAll">
         <methods>
+          <include name="categoryListsTest"/>
           <include name="setup"/>
           <include name="tearDown"/>
           <include name="shopInventoryEdit"/>
+          <include name="shopInventorySearch"/>
         </methods>
       </class> <!-- nijeeshqwy.ShopMerchantOverAll -->
     </classes>

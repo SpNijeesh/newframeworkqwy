@@ -1,5 +1,7 @@
 package nijeeshqwy.pageobjects;
 
+import org.openqa.selenium.By;
+import org.openqa.selenium.StaleElementReferenceException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -14,8 +16,7 @@ public class ShopMerchantCategoryPage {
 
 	WebDriver driver;
     WebDriverWait wait;
-
-    @FindBy(xpath = "//div[@class='p-paginator-bottom p-paginator p-component ng-star-inserted']//span//button")
+    @FindBy(xpath = "//div[contains(@class, 'p-paginator-bottom')]//span//button")
     private List<WebElement> categoryNextPages;
 
     @FindBy(xpath = "//tbody[@class='p-element p-datatable-tbody']//tr//td[1]")
@@ -48,18 +49,22 @@ public class ShopMerchantCategoryPage {
         this.wait = new WebDriverWait(driver, Duration.ofSeconds(20));
         PageFactory.initElements(driver, this);
     }
-
-    // Method to get and print category lists
     public void printCategoryLists() {
+    	wait.until(ExpectedConditions.visibilityOfAllElementsLocatedBy((By) this.categoryNextPages));
         for (WebElement categoryNextPage : categoryNextPages) {
             System.out.println("Page No: " + categoryNextPage.getText());
 
             for (WebElement categoryList : categoryListItems) {
                 String categoryNames = categoryList.getText();
                 System.out.println(categoryNames);
+             
             }
 
-            categoryNextPage.click();
+            try {
+                categoryNextPage.click();
+            } catch (StaleElementReferenceException e) {
+                // Handle the exception (e.g., re-fetch the element or skip to the next iteration)
+            }
         }
     }
 
