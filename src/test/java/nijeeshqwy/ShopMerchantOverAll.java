@@ -6,21 +6,15 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.testng.Assert;
-import org.testng.ITestResult;
 import org.testng.annotations.AfterClass;
-import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
-
 import com.aventstack.extentreports.ExtentReports;
-import com.aventstack.extentreports.reporter.ExtentSparkReporter;
-
 import java.io.File;
 import java.io.IOException;
 import java.time.Duration;
 import java.util.HashMap;
 import java.util.Map;
-
 import io.github.bonigarcia.wdm.WebDriverManager;
 import nijeeshqwy.pageobjects.ShopMerchantCategoryPage;
 import nijeeshqwy.pageobjects.ShopMerchantInventoryPage;
@@ -66,10 +60,10 @@ public class ShopMerchantOverAll{
         
     }
     @Test(priority = 2)
-    public void categoryListsTest() {
-        categoryPage.printCategoryLists();
+    public void categoryListsTest() throws InterruptedException {
+   categoryPage.printCategoryLists();
         String url= driver.getCurrentUrl();
-        Assert.assertTrue(url.equals(expectedurl), "URLs do not match");
+       Assert.assertTrue(url.equals(expectedurl), "URLs do not match");
     }
     @Test(priority = 3)
     public void categorySearchTest() {
@@ -84,9 +78,8 @@ public class ShopMerchantOverAll{
     }
     @Test(priority = 5)
     public void shopInventory() throws InterruptedException {
-  
     	inventorypage.inventoryPage();
-       
+    	Thread.sleep(6000);       
     }
     @Test(priority = 6)
     public void shopInventorySearch() throws InterruptedException
@@ -97,10 +90,7 @@ public class ShopMerchantOverAll{
     @Test(priority = 7)
     public void shopInventoryEdit() throws InterruptedException
     {
-    	loginTest();
-    	shopInventory();
-    	shopInventorySearch();
-    	inventorypage.performInventoryEdit("50");
+    	inventorypage.performInventoryEdit("80");
     	Thread.sleep(3000);
     	
     }
