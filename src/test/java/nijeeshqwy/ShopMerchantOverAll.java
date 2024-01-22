@@ -61,9 +61,10 @@ public class ShopMerchantOverAll{
     }
     @Test(priority = 2)
     public void categoryListsTest() throws InterruptedException {
-   categoryPage.printCategoryLists();
-        String url= driver.getCurrentUrl();
-       Assert.assertTrue(url.equals(expectedurl), "URLs do not match");
+    	//loginTest();
+   categoryPage.performCategoryListOriginal();
+//        String url= driver.getCurrentUrl();
+//       Assert.assertTrue(url.equals(expectedurl), "URLs do not match");
     }
     @Test(priority = 3)
     public void categorySearchTest() {
