@@ -1,6 +1,7 @@
 package nijeeshqwy.pageobjects;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.StaleElementReferenceException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -16,8 +17,8 @@ public class ShopMerchantCategoryPage {
 
 	WebDriver driver;
     WebDriverWait wait;
-    @FindBy(xpath = "//div[contains(@class, 'p-paginator-bottom')]//span//button")
-    private List<WebElement> categoryNextPages;
+//    @FindBy(xpath = "//div[@class='p-paginator-bottom p-paginator p-component ng-star-inserted']//span//button")
+//    private List<WebElement> categoryNextPages;
 
     @FindBy(xpath = "//tbody[@class='p-element p-datatable-tbody']//tr//td[1]")
     private List<WebElement> categoryListItems;
@@ -42,6 +43,18 @@ public class ShopMerchantCategoryPage {
 
     @FindBy(xpath = "//div[@id='toast-container']")
     private WebElement submissionMessage;
+    @FindBy(xpath = "//tbody/tr[1]/td[2]")
+    private WebElement selecttableforscroll;
+    
+    
+    @FindBy(xpath = "//tbody/tr[1]/td[2]")
+    private WebElement categoryElement;
+
+    @FindBy(xpath = "//div[@class='p-paginator-bottom p-paginator p-component ng-star-inserted']//span//button")
+    private List<WebElement> categoryNextPages;
+
+    @FindBy(xpath = "//tbody[@class='p-element p-datatable-tbody']//tr//td[1]")
+    private List<WebElement> categoryLists;
 
     // Constructor
     public ShopMerchantCategoryPage(WebDriver driver) {
@@ -51,6 +64,8 @@ public class ShopMerchantCategoryPage {
     }
     public void printCategoryLists() {
     	wait.until(ExpectedConditions.visibilityOfAllElementsLocatedBy((By) this.categoryNextPages));
+    	selecttableforscroll.click();
+    	
         for (WebElement categoryNextPage : categoryNextPages) {
             System.out.println("Page No: " + categoryNextPage.getText());
 
@@ -59,20 +74,44 @@ public class ShopMerchantCategoryPage {
                 System.out.println(categoryNames);
              
             }
-
-            try {
-                categoryNextPage.click();
-            } catch (StaleElementReferenceException e) {
-                // Handle the exception (e.g., re-fetch the element or skip to the next iteration)
-            }
+            JavascriptExecutor jsExecutor = (JavascriptExecutor) driver;
+	        jsExecutor.executeScript("arguments[0].click();", categoryNextPage);
         }
     }
 
+    public void clickCategoryElement() {
+        categoryElement.click();
+    }
+    public void printPageNumbers() {
+        for (WebElement categoryNextPage : categoryNextPages) {
+            System.out.println("Page No: " + categoryNextPage.getText());
+        }
+    }
+    public void printCategoryList() {
+        System.out.println("Available Categories");
+        for (WebElement categoryList : categoryLists) {
+            String categoryNames = categoryList.getText();
+            System.out.println(categoryNames);
+        }
+    }
+    public void clickCategoryNextPage(WebElement nextPage) {
+        JavascriptExecutor jsExecutor = (JavascriptExecutor) driver;
+        jsExecutor.executeScript("arguments[0].click();", nextPage);
+    }
+    
     // Method to perform category search
     public void performCategorySearch(String searchTerm) {
         WebElement searchField = wait.until(ExpectedConditions.elementToBeClickable(this.searchField));
         searchField.click();
         searchField.sendKeys(searchTerm);
+    }
+    public void performCategoryListOriginal() {
+        clickCategoryElement();
+
+        for (WebElement categoryNextPage : categoryNextPages) {
+            printCategoryList();
+            clickCategoryNextPage(categoryNextPage);
+        }
     }
 
     // Method to perform category request
