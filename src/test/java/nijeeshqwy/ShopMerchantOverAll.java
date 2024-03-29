@@ -1,4 +1,4 @@
-package nijeeshqwy;
+	package nijeeshqwy;
 import org.apache.commons.io.FileUtils;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
@@ -49,6 +49,7 @@ public class ShopMerchantOverAll{
         categoryPage = new ShopMerchantCategoryPage(driver);
         inventorypage=new ShopMerchantInventoryPage(driver);
         loginPage.goTo();
+        loginPage.login(user, pass);
         
     }
 
@@ -63,8 +64,6 @@ public class ShopMerchantOverAll{
     public void categoryListsTest() throws InterruptedException {
     	//loginTest();
    categoryPage.performCategoryListOriginal();
-//        String url= driver.getCurrentUrl();
-//       Assert.assertTrue(url.equals(expectedurl), "URLs do not match");
     }
     @Test(priority = 3)
     public void categorySearchTest() {
@@ -74,8 +73,8 @@ public class ShopMerchantOverAll{
 
     @Test(priority = 4)
     public void categoryRequestTest() throws InterruptedException {
-
-        categoryPage.performCategoryRequest(categorynametorequest, filePath);
+    //	loginTest();
+        categoryPage.performCategoryRequest(categorynametorequest,filePath);
     }
     @Test(priority = 5)
     public void shopInventory() throws InterruptedException {
@@ -91,11 +90,12 @@ public class ShopMerchantOverAll{
     @Test(priority = 7)
     public void shopInventoryEdit() throws InterruptedException
     {
-    	inventorypage.performInventoryEdit("80");
+    	inventorypage.performInventoryEdit("70");
     	Thread.sleep(3000);
     	
     }
 
+    
     public String getScreenshot(String testCaseName,WebDriver driver) throws IOException
     {
     	TakesScreenshot ts=(TakesScreenshot)driver;

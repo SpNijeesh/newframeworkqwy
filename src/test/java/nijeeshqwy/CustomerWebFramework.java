@@ -23,32 +23,30 @@ import org.testng.annotations.Test;
     private String password = "123456789";
     private String expectedText = "Nijeesh_Trivandrum";
     private Landingpage landingpage;
-    ShoppingCartPage shoppingCartPage;
-    PaymentPage paymentPage;
+    private ShoppingCartPage shoppingCartPage;
+    private PaymentPage paymentPage;
     @BeforeClass
-    public void setUp() {
+    public void setUp() throws InterruptedException {
     	
         WebDriverManager.chromedriver().setup();
         driver = new ChromeDriver();
-        ChromeOptions options = new ChromeOptions();
-        options.addArguments("--incognito");
+      //  ChromeOptions options = new ChromeOptions();
         driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(30));
         driver.manage().window().maximize();
         driver.get("https://stage-customer.qwqer.in/home");
         landingpage = new Landingpage(driver);
         shoppingCartPage = new ShoppingCartPage(driver);
         paymentPage = new PaymentPage(driver);
+        landingpage.clickTrivandrumImage();
+    	landingpage.clickCartItemName();
+    	landingpage.customerlogin(mobile, password);
         
     }
 
     @Test(priority = 1)
     public void performLogin() throws Throwable{
     	WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(30));
-    	landingpage.clickTrivandrumImage();
-    	landingpage.clickCartItemName();
-    	landingpage.enterCustomerPhone(mobile);
-    	landingpage.enterPassword(password);
-    	landingpage.clickSubmitButton();
+    	
         wait.until(ExpectedConditions.elementToBeClickable(By.id("toast-container"))); 
         String loginValidationText = landingpage.getToastMessage();
         if (loginValidationText.contains("Success")) {
