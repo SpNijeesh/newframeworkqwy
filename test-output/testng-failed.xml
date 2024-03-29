@@ -6,12 +6,8 @@
       <class name="nijeeshqwy.ShopMerchantOverAll">
         <methods>
           <include name="categoryListsTest"/>
-          <include name="categoryRequestTest"/>
           <include name="setup"/>
           <include name="tearDown"/>
-          <include name="shopInventoryEdit"/>
-          <include name="shopInventorySearch"/>
-          <include name="shopInventory"/>
         </methods>
       </class> <!-- nijeeshqwy.ShopMerchantOverAll -->
     </classes>

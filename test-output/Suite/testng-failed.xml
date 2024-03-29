@@ -8,9 +8,9 @@
     <classes>
       <class name="nijeeshqwy.ShopMerchantOverAll">
         <methods>
-          <include name="loginTest"/>
           <include name="setup"/>
           <include name="tearDown"/>
+          <include name="shopInventorySearch"/>
         </methods>
       </class> <!-- nijeeshqwy.ShopMerchantOverAll -->
     </classes>

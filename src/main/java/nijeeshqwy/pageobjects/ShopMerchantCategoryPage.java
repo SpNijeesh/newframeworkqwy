@@ -2,7 +2,6 @@ package nijeeshqwy.pageobjects;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
-import org.openqa.selenium.StaleElementReferenceException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -17,8 +16,6 @@ public class ShopMerchantCategoryPage {
 
 	WebDriver driver;
     WebDriverWait wait;
-//    @FindBy(xpath = "//div[@class='p-paginator-bottom p-paginator p-component ng-star-inserted']//span//button")
-//    private List<WebElement> categoryNextPages;
 
     @FindBy(xpath = "//tbody[@class='p-element p-datatable-tbody']//tr//td[1]")
     private List<WebElement> categoryListItems;

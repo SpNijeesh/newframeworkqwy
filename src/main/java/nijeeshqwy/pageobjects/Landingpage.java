@@ -1,12 +1,9 @@
 package nijeeshqwy.pageobjects;
-
-import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 
-import nijeeshqwy.AbstractComponents.AbstractComponent;
 
 
 
@@ -25,7 +22,7 @@ public class Landingpage{
     @FindBy(xpath = "//span[@class='cart-item-name']")
     private WebElement cartItemName;
 
-    @FindBy(id = "customerPhone")
+    @FindBy(xpath = "//input[@formcontrolname='username']")
     private WebElement customerPhone;
 
     @FindBy(name = "password")
@@ -45,17 +42,14 @@ public class Landingpage{
         cartItemName.click();
     }
 
-    public void enterCustomerPhone(String mobile) {
-        customerPhone.sendKeys(mobile);
+    public void customerlogin(String mobile,String password) throws InterruptedException
+    {
+    	Thread.sleep(2000);
+    	customerPhone.sendKeys(mobile);
+    	passwordInput.sendKeys(password);
+    	submitButton.click();
     }
-
-    public void enterPassword(String password) {
-        passwordInput.sendKeys(password);
-    }
-
-    public void clickSubmitButton() {
-        submitButton.click();
-    }
+   
 
     public String getToastMessage() {
         return toastContainer.getText();

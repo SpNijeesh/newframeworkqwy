@@ -16,8 +16,13 @@ public class ShopMerchantInventoryPage {
     @FindBy(xpath = "//label[normalize-space()='Inventory']")
     WebElement InventoryPage;
 
-    @FindBy(xpath = "//input[@placeholder='Search']")
+    @FindBy(xpath = "//input[@placeholder='Search Inventories']")
     WebElement Inventorysearch;
+
+    @FindBy(xpath = "//button[normalize-space()='Search']")
+    WebElement searchbutton;
+    
+  //button[normalize-space()='Search']
 
     @FindBy(xpath = "//button[@class='button'][1]")
     private WebElement inventoryedit;
@@ -55,6 +60,7 @@ public class ShopMerchantInventoryPage {
         WebElement searchField = wait.until(ExpectedConditions.elementToBeClickable(this.Inventorysearch));
         searchField.click();
         searchField.sendKeys(searchTerm);
+        searchbutton.click();
         Thread.sleep(4000);
 
     }
